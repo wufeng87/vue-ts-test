@@ -2,14 +2,13 @@
   "name": "yn-p1-sample-project",
   "version": "0.0.1",
   "private": true,
+  "author": "gongch@yuanian.com",
   "scripts": {
     "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint"
   },
-  "author": "gongch@yuanian.com",
-  "license": "See license on LICENSE file",
   "dependencies": {
     "@ant-design/colors": "^3.1.0",
     "@ant-design/icons": "^1.1.16",
@@ -28,10 +27,12 @@
     "qs": "^6.7.0",
     "reqwest": "^2.0.5",
     "vue": "^2.6.10",
+    "vue-class-component": "^7.2.2",
     "vue-custom-element": "^3.2.7",
     "vue-echarts": "^4.0.3",
     "vue-infinite-scroll": "^2.0.2",
     "vue-prism-editor": "^0.3.0",
+    "vue-property-decorator": "^8.3.0",
     "vue-router": "^3.0.3",
     "vuedraggable": "^2.23.0",
     "vuex": "^3.1.1",
@@ -39,11 +40,14 @@
   },
   "devDependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@types/jest": "^23.1.4",
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
+    "@vue/cli-plugin-typescript": "^4.2.3",
     "@vue/cli-plugin-unit-jest": "^3.8.0",
     "@vue/cli-service": "^3.8.0",
     "@vue/eslint-config-prettier": "^4.0.1",
+    "@vue/eslint-config-typescript": "^4.0.0",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
@@ -57,6 +61,8 @@
     "html-loader": "^0.5.5",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
+    "ts-jest": "^23.0.0",
+    "typescript": "~3.7.5",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
@@ -66,11 +72,12 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "@vue/prettier"
+      "@vue/prettier",
+      "@vue/typescript"
     ],
     "rules": {},
     "parserOptions": {
-      "parser": "babel-eslint"
+      "parser": "@typescript-eslint/parser"
     }
   },
   "postcss": {
@@ -87,12 +94,15 @@
       "js",
       "jsx",
       "json",
-      "vue"
+      "vue",
+      "ts",
+      "tsx"
     ],
     "transform": {
       "^.+\\.vue$": "vue-jest",
       ".+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
-      "^.+\\.jsx?$": "babel-jest"
+      "^.+\\.jsx?$": "babel-jest",
+      "^.+\\.tsx?$": "ts-jest"
     },
     "transformIgnorePatterns": [
       "/node_modules/"
@@ -110,6 +120,12 @@
     "watchPlugins": [
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
-    ]
-  }
+    ],
+    "globals": {
+      "ts-jest": {
+        "babelConfig": true
+      }
+    }
+  },
+  "license": "See license on LICENSE file"
 }
