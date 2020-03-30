@@ -18,6 +18,7 @@ import UiUtils from "yn-p1/libs/utils/UiUtils";
 import DsUtils from "yn-p1/libs/utils/DsUtils";
 import RouterUtils from "yn-p1/libs/utils/RouterUtils";
 import { APPS, BACKEND } from "@/config/SETUP";
+import menuStructure from "@/config/navi/menuStructure.js";
 
 export default {
   name: "app",
@@ -41,7 +42,8 @@ export default {
     import(`ant-design-vue/lib/locale-provider/${language}`).then(m => {
       this.locale = m.default;
     });
-    AppRouter.loadMenu(this);
+    // AppRouter.loadMenu(this);
+    AppRouter.loadMenu(this, menuStructure);
   },
   methods: {
     setWidth() {
