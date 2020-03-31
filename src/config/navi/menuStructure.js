@@ -73,6 +73,13 @@ export default [
     }
   },
   {
+    path: "/A1",
+    component: () => import("@/views/applications/Index"),
+    meta: {
+      appId: "a1"
+    }
+  },
+  {
     path: "/",
     component: () => import("@/views/samples/views/Default"),
     meta: {

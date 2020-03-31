@@ -1,23 +1,76 @@
 <template>
   <div>
     <div class="main-frame-container">
+      <div :class="headerClass">
+        <div class="main-frame-header-container">
+          <div class="main-frame-header-start">
+            <div class="main-frame-header-item">
+              <yn-button @click="showNavi" icon="menu-fold"></yn-button>
+            </div>
+          </div>
+          <div class="main-frame-header-center">
+            <div class="main-frame-header-item">
+              <span class="main-frame-title">{{ pageTitle }}</span>
+            </div>
+          </div>
+          <div class="main-frame-header-end">
+            <div class="main-frame-header-item">
+              <!-- <yn-button icon="reload" @click="changeTheme"></yn-button> -->
+              <!-- <yn-switch
+                class="yn-theme-switch"
+                @change="handleThemeChange"
+                checkedChildren="浅"
+                unCheckedChildren="深"
+              />-->
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="main-frame-content">
         <div id="mainContainer" class="main-frame-content-viewport">
           <router-view></router-view>
         </div>
       </div>
     </div>
+
+    <yn-drawer
+      :title="sidebar.sliderTitle"
+      :placement="sidebar.placement"
+      :closable="false"
+      @close="onClose"
+      :visible="sidebar.visible"
+      :wrapClassName="wrapperClass"
+    >
+      <div class="main-frame-sidebar-wrapper">
+        <div class="main-frame-sidebar-content">
+          <div class="main-frame-sidebar-header">
+            <!-- <UserInfo :info="userInfo" /> -->
+          </div>
+          <div class="main-frame-sidebar-body">
+            <div class="main-frame-sidebar-content-navi">
+              <NaviBar />
+            </div>
+          </div>
+        </div>
+        <div class="main-frame-sidebar-content-footer">
+          <span>
+            <yn-icon type="block" />{{ mainTitle }}
+            <yn-icon type="copyright" />{{ year }}
+          </span>
+        </div>
+      </div>
+    </yn-drawer>
   </div>
 </template>
 
 <script>
-// import NaviBar from "./NaviBar.vue";
+import NaviBar from "./NaviBar.vue";
 // import UserInfo from "./UserInfo.vue";
 import { mapGetters, mapActions } from "vuex";
 // import { FROM_TEMPLATE } from "../../config/platform/SETUP";
-// import "yn-p1/libs/components/yn-button/";
-// import "yn-p1/libs/components/yn-drawer/";
-// import "yn-p1/libs/components/yn-icon/";
+import "yn-p1/libs/components/yn-button/";
+import "yn-p1/libs/components/yn-drawer/";
+import "yn-p1/libs/components/yn-icon/";
 
 export default {
   name: "MainContent",
@@ -25,7 +78,7 @@ export default {
     title: String
   },
   components: {
-    // NaviBar
+    NaviBar
     // UserInfo
   },
   computed: {
