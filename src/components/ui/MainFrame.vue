@@ -1,12 +1,11 @@
 <template>
   <div>
-    <div class="main-frame-container">
-      <div class="main-frame-content">
-        <div id="mainContainer" class="main-frame-content-viewport">
-          <router-view></router-view>
-        </div>
-      </div>
+    <div id="mainContainer" class="main-frame-content-viewport">
+      <router-view></router-view>
     </div>
+    <!-- <div class="main-frame-container">
+      <div class="main-frame-content"></div>
+    </div> -->
   </div>
 </template>
 
