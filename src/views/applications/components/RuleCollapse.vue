@@ -1,32 +1,46 @@
 <template>
-  <yn-collapse class="rule-collapse">
-    <yn-collapse-panel :key="title">
-      <div slot="header">
-        <span
-          style="padding-right: 2px;"
-          :class="{
-            'high-risk': RuleTypes.HighRisk === type,
-            suspicious: RuleTypes.Suspicious === type,
-            pass: RuleTypes.Pass === type
-          }"
+  <div>
+    <!-- head区域 -->
+    <div class="head-section">
+      <div v-for="item in head" :key="item.name" class="head-item">
+        {{ item.name }}规则：{{ item.count }}
+      </div>
+    </div>
+    <yn-collapse class="rule-collapse" v-for="item in body" :key="item.name">
+      <yn-collapse-panel :key="item.name">
+        <div slot="header">
+          <span
+            style="padding-right: 2px;"
+            :class="{
+              'high-risk': item.code !== 'TG',
+              suspicious: item.code !== 'TG',
+              pass: item.code === 'TG'
+            }"
+          >
+            {{ item.name }}
+          </span>
+          ({{ item.count }}项)
+        </div>
+        <!-- TODO 滚动条 -->
+        <div
+          v-for="listItem in item.value"
+          :key="listItem.ruleName"
+          class="rule-item"
         >
-          {{ title }}
-        </span>
-        ({{ list.length }}项)
-      </div>
-      <!-- TODO 滚动条 -->
-      <div v-for="item in list" :key="item.title" class="rule-item">
-        <span>{{ item.title }}</span>
-        <span>{{ item.date }}</span>
-      </div>
-    </yn-collapse-panel>
-  </yn-collapse>
+          <span>{{ listItem.ruleName }}</span>
+          <span>{{ listItem.invalidValue }}</span>
+        </div>
+      </yn-collapse-panel>
+    </yn-collapse>
+  </div>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 
 import "yn-p1/libs/components/yn-collapse/";
 import "yn-p1/libs/components/yn-collapse-panel/";
+
+import { IntelVerifyRuleAreaModule } from "@/store/modules/intelVerifyRuleArea";
 
 export enum RuleTypes {
   HighRisk = 1,
@@ -42,19 +56,41 @@ interface RuleItem {
   title: string;
   date: number;
 }
+
+IntelVerifyRuleAreaModule.InitRuleArea();
+
 @Component({
   name: "RuleCollapse",
   components: {}
 })
 export default class extends Vue {
-  @Prop({ required: true }) private title!: string;
-  @Prop({ required: true }) private type!: string;
-  @Prop({ required: true }) private list!: RuleItem[];
+  // @Prop({ required: true }) private title!: string;
+  // @Prop({ required: true }) private type!: string;
+  // @Prop({ required: true }) private list!: RuleItem[];
   RuleTypes = RuleTypes;
+
+  get head() {
+    return IntelVerifyRuleAreaModule.head;
+  }
+
+  get body() {
+    return IntelVerifyRuleAreaModule.body;
+  }
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
+.head-section {
+  background: #fff;
+  margin-bottom: 2px;
+  padding: 1.1rem 1rem;
+
+  .head-item {
+    width: 50%;
+    display: inline-block;
+    text-align: left;
+  }
+}
 span.high-risk,
 span.suspicious {
   color: #d0021b;

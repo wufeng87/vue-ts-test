@@ -17,22 +17,18 @@
       </yn-collapse>
       <!-- TODO 这里能有组件属性提示吗 -->
       <div>
-        <RuleCollapse
-          :title="title1"
-          :list="ruleItems1"
-          :type="type1"
-        ></RuleCollapse>
+        <RuleCollapse></RuleCollapse>
 
-        <RuleCollapse
+        <!-- <RuleCollapse
           :title="title3"
           :list="ruleItems3"
           :type="type3"
-        ></RuleCollapse>
+        ></RuleCollapse> -->
       </div>
 
-      <RelativeCollapse></RelativeCollapse>
+      <!-- <RelativeCollapse></RelativeCollapse> -->
 
-      <FeeTrend></FeeTrend>
+      <!-- <FeeTrend></FeeTrend> -->
     </div>
   </div>
 </template>
@@ -113,6 +109,9 @@ export default class extends Vue {
 
 // scoped
 <style lang="less">
+#app {
+  background: rgb(244, 244, 244);
+}
 .assitant-view {
   background: rgb(244, 244, 244);
   .ant-collapse {
@@ -131,7 +130,7 @@ export default class extends Vue {
 }
 
 .assitant-view .ant-collapse > .ant-collapse-item > .ant-collapse-header {
-  padding-left: 20px;
+  padding-left: 1rem;
 }
 .assitant-view i.ant-collapse-arrow {
   right: 24px;
@@ -161,6 +160,7 @@ export default class extends Vue {
 }
 
 .intelVerifyTitle {
+  box-shadow: inset 0 -1px 0 0 #e4e4e4;
   align-items: center;
   display: flex;
   justify-content: space-between;

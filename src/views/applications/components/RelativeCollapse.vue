@@ -1,6 +1,6 @@
 <template>
   <yn-collapse>
-    <yn-collapse-panel :key="title">
+    <yn-collapse-panel>
       <div slot="header">
         <span>同事项历史单据</span>
         <yn-icon type="edit" />

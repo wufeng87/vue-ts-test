@@ -4,7 +4,9 @@ import "normalize.css/normalize.css";
 import vueCustomElement from "vue-custom-element";
 import { LOG, APPS, BACKEND } from "./config/SETUP";
 import Logger from "yn-p1/libs/modules/log/logger";
-import store from "yn-p1/libs/store";
+// import store from "yn-p1/libs/store";
+import store from "@/store";
+
 import VueRouter from "vue-router";
 import YnP1 from "yn-p1";
 //import "@/assets/applications/stylesheets/app.css";
