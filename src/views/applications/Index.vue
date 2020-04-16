@@ -8,10 +8,15 @@
     </div>
 
     <div class="intelVerifyContent">
-      <yn-collapse v-model="activeKey">
-        <yn-collapse-panel :header="card1Title" key="1">
-          <div v-for="(list, key) in applicantInfo" :key="key">
-            {{ key }} {{ list }}
+      <!-- 申请人信息 -->
+      <yn-collapse
+        v-model="activeKey"
+        v-if="head && body[0]"
+        class="applicantInfo"
+      >
+        <yn-collapse-panel :header="head" key="1">
+          <div v-for="(item, key) in body" :key="key" class="attrItem">
+            {{ item.name }} {{ item.value }}
           </div>
         </yn-collapse-panel>
       </yn-collapse>
@@ -29,6 +34,7 @@
       <!-- <RelativeCollapse></RelativeCollapse> -->
 
       <!-- <FeeTrend></FeeTrend> -->
+      <!-- <FeeTrend2></FeeTrend2> -->
     </div>
   </div>
 </template>
@@ -40,11 +46,17 @@ import { Component, Vue, Watch } from "vue-property-decorator";
 import "yn-p1/libs/components/yn-collapse/";
 import "yn-p1/libs/components/yn-collapse-panel/";
 import "yn-p1/libs/components/yn-icon/";
+import queryString from "query-string";
+
+import {
+  IntelApplicantInfoModule,
+  IIntelApplicantInfoState
+} from "@/store/modules/intelVerifyApplicantInfo";
 
 import RuleCollapse from "@/views/applications/components/RuleCollapse.vue";
-import { RuleTypes } from "@/views/applications/components/RuleCollapse.vue";
 import RelativeCollapse from "@/views/applications/components/RelativeCollapse.vue";
 import FeeTrend from "@/views/applications/components/FeeTrend.vue";
+import FeeTrend2 from "@/views/applications/components/FeeTrend2";
 
 declare global {
   interface Window {
@@ -57,47 +69,38 @@ declare global {
 // template: '<button @click="onClick">Click!</button>'
 type ApplicantInfoType = Record<string, string | number>;
 
+const parsed = queryString.parse(decodeURIComponent(location.search));
+console.log("parsed:", parsed);
+if (parsed.usedArea) {
+  const decoded: IIntelApplicantInfoState = JSON.parse(parsed.usedArea);
+  console.log("decoded:", decoded);
+  IntelApplicantInfoModule.Init(decoded);
+}
+
 @Component({
   components: {
     RuleCollapse,
     RelativeCollapse,
-    FeeTrend
+    FeeTrend,
+    FeeTrend2
   }
 })
 export default class extends Vue {
   // Initial data can be declared as instance properties
   intelVerifyTitle: string = "审单助手";
-  card1Title = "申请人信息";
   activeKey = ["1"];
-  applicantInfo: ApplicantInfoType = {
-    信用等级: "A",
-    信用分: 108,
-    借款未还: "10,000.00",
-    申请未使用: "3,000.00",
-    累积提单: 39,
-    累积退单: 9,
-    累积退单率: "24%"
-  };
 
-  title1 = "高危";
-  ruleItems1 = [
-    { title: "发票有效期不在60天内1", date: "发票日期：2019-01-01" },
-    { title: "发票有效期不在60天内2", date: "发票日期：2019-01-01" },
-    { title: "发票有效期不在60天内3", date: "发票日期：2019-01-01" }
-  ];
-  type1 = RuleTypes.HighRisk;
-
-  title3 = "通过";
-  ruleItems3 = [{ title: "符合标准", date: "2019-01-01" }];
-  type3 = RuleTypes.Pass;
+  get head() {
+    return IntelApplicantInfoModule.head;
+  }
+  get body() {
+    return IntelApplicantInfoModule.body;
+  }
 
   @Watch("activeKey")
-  activeKeyFun(key) {
-    console.log(key);
-  }
+  activeKeyFun(key) {}
   // Component methods can be declared as instance methods
   onClick(): void {
-    debugger;
     const json = {
       hideFloat: true
     };
@@ -111,6 +114,16 @@ export default class extends Vue {
 <style lang="less">
 #app {
   background: rgb(244, 244, 244);
+}
+.applicantInfo {
+  .ant-collapse-content-box {
+    width: 70%;
+
+    .attrItem {
+      display: inline-block;
+      width: 50%;
+    }
+  }
 }
 .assitant-view {
   background: rgb(244, 244, 244);

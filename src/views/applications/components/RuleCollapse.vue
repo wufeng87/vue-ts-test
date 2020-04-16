@@ -6,8 +6,14 @@
         {{ item.name }}规则：{{ item.count }}
       </div>
     </div>
-    <yn-collapse class="rule-collapse" v-for="item in body" :key="item.name">
-      <yn-collapse-panel :key="item.name">
+    <!-- defaultActiveKey -->
+    <yn-collapse
+      class="rule-collapse"
+      v-for="item in body"
+      :key="item.name"
+      :defaultActiveKey="item.code === 'TG' ? null : '1'"
+    >
+      <yn-collapse-panel key="1">
         <div slot="header">
           <span
             style="padding-right: 2px;"
@@ -42,21 +48,6 @@ import "yn-p1/libs/components/yn-collapse-panel/";
 
 import { IntelVerifyRuleAreaModule } from "@/store/modules/intelVerifyRuleArea";
 
-export enum RuleTypes {
-  HighRisk = 1,
-  Suspicious,
-  Pass
-}
-const typeColorMap = {
-  [RuleTypes.HighRisk]: "red",
-  [RuleTypes.Suspicious]: "red",
-  [RuleTypes.Pass]: "green"
-};
-interface RuleItem {
-  title: string;
-  date: number;
-}
-
 IntelVerifyRuleAreaModule.InitRuleArea();
 
 @Component({
@@ -64,11 +55,6 @@ IntelVerifyRuleAreaModule.InitRuleArea();
   components: {}
 })
 export default class extends Vue {
-  // @Prop({ required: true }) private title!: string;
-  // @Prop({ required: true }) private type!: string;
-  // @Prop({ required: true }) private list!: RuleItem[];
-  RuleTypes = RuleTypes;
-
   get head() {
     return IntelVerifyRuleAreaModule.head;
   }

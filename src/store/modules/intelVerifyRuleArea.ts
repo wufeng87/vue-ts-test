@@ -16,7 +16,6 @@ import store from "@/store";
  *
  */
 interface RuleAreaHead {
-  //
   /**
    * 名称：高危、通过等
    */
@@ -47,13 +46,14 @@ class IntelVerifyRuleArea extends VuexModule implements IRuleAreaState {
   public head: RuleAreaHead[] = [];
   public body: RuleAreaBody[] = [];
 
+  // 注意不要用同名的mutation方法，会冲突
   @Mutation
-  private SET_HEAD(head: RuleAreaHead[]) {
+  private SET_RULE_AREA_HEAD(head: RuleAreaHead[]) {
     this.head = head;
   }
 
   @Mutation
-  private SET_BODY(body: RuleAreaBody[]) {
+  private SET_RULE_AREA_BODY(body: RuleAreaBody[]) {
     this.body = body;
   }
 
@@ -62,7 +62,7 @@ class IntelVerifyRuleArea extends VuexModule implements IRuleAreaState {
    */
   @Action
   public async InitRuleArea() {
-    this.SET_HEAD([
+    this.SET_RULE_AREA_HEAD([
       {
         name: "检查",
         code: "GW",
@@ -84,7 +84,7 @@ class IntelVerifyRuleArea extends VuexModule implements IRuleAreaState {
         count: "5"
       }
     ]);
-    this.SET_BODY([
+    this.SET_RULE_AREA_BODY([
       {
         code: "GW",
         name: "高危",

@@ -73,10 +73,10 @@ export default [
     }
   },
   {
-    path: "/A1",
+    path: "/index",
     component: () => import("@/views/applications/Index"),
     meta: {
-      appId: "a1"
+      appId: "index"
     }
   },
   {
